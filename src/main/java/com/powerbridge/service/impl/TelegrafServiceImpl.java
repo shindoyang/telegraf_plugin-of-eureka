@@ -4,8 +4,6 @@ import com.powerbridge.config.SupportConf;
 import com.powerbridge.service.ITelegrafService;
 import com.powerbridge.util.ExecLinuxCMD;
 import com.powerbridge.util.FileUtil;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

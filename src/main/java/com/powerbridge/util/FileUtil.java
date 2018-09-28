@@ -33,6 +33,9 @@ public class FileUtil {
         sb.append(conf.getUrlsTemplate() + " \r\n   urls = [");
         for(int i = 0; i< projectInfos.size();i++){
             String projectInfo = projectInfos.get(i);
+            //如果是docker容器中部署的应用，需要替换为宿主机的ip
+            if(conf.isDockerBuild())
+                projectInfo = StringUtil.replaceIp(projectInfo, conf.getDockerHostIp());
             if(i==projectInfos.size()-1) {
                 sb.append("\"http://" + projectInfo.substring(projectInfo.indexOf(":") + 1, projectInfo.length())).append("/actuator/jolokia\"");
             }else{

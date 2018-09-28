@@ -33,6 +33,12 @@ public class SupportConf {
     @Value("${telegraf.jolokia2_agent.urls.template}")
     private String urlsTemplate;
 
+    @Value("${docker.build}")
+    private boolean dockerBuild;
+
+    @Value("${docker.host.ip}")
+    private String dockerHostIp;
+
     public String getEurekaApi() {
         return eurekaApi;
     }
@@ -79,5 +85,21 @@ public class SupportConf {
 
     public void setUrlsTemplate(String urlsTemplate) {
         this.urlsTemplate = urlsTemplate;
+    }
+
+    public boolean isDockerBuild() {
+        return dockerBuild;
+    }
+
+    public void setDockerBuild(boolean dockerBuild) {
+        this.dockerBuild = dockerBuild;
+    }
+
+    public String getDockerHostIp() {
+        return dockerHostIp;
+    }
+
+    public void setDockerHostIp(String dockerHostIp) {
+        this.dockerHostIp = dockerHostIp;
     }
 }
