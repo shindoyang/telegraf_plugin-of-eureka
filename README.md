@@ -1,4 +1,4 @@
-##前言
+## 前言
 要搭建一套能监控服务器、docker、docker容器、jvm的APM服务，还要有阀值预警功能。  
 初步研究，发现SpringBootAdmin 和 docker自带的监控都不太满足，最后选定AJTIG技术方案。  
 >telegraf已自带docker脚本插件，但是只能拉取docker及其容器的基础信息，并不能拉取容器内应用的jvm信息  
@@ -18,7 +18,9 @@ urls = ["http://IP_1:port_1/actuator/jolokia","http://IP_2:port_2/actuator/jolok
 1. 插件启动时默认将eureka中所有已注册的服务同步到telegraf.conf的jolokia脚本上
 2. 每5分钟(可调整)监听eureka中注册列表的变化，如果有新增就同步到telegraf.conf脚本上
 
-##启动方法：
+## 启动方法：
 
 把 application-{env}.properties 与 项目jar(telegrafsupport-0.0.1-SNAPSHOT.jar)包放在同一目录下，执行以下命令启动：  
 java -jar telegrafsupport-0.0.1-SNAPSHOT.jar --spring.profiles.active={环境test/prod}
+
+
