@@ -29,29 +29,33 @@ public class EurekaServiceImpl implements IEurekaService {
     public List<String> getRegisterProjects(int type) {
         List<String> cornEurekaList = new ArrayList<>();
 
-        //获取eureka中注册的所有服务
-        String eurekaProjects= HttpUtil.sendGet(conf.getEurekaApi(), "");
+        String eurekaUrls = conf.getEurekaApi();
+        String[] eurekaServers = eurekaUrls.split(";");
+        for(String eurekaServerUrl : eurekaServers){
+            //获取eureka中注册的所有服务
+            String eurekaProjects= HttpUtil.sendGet(eurekaServerUrl, "");
 
-        //解析获取服务的name/host/port信息
-        JSONObject jsonObject = JSONObject.fromObject(eurekaProjects);
-        log.debug("eureka接口响应信息：" + jsonObject.toString());
-        JSONObject applications = (JSONObject)jsonObject.get("applications");
-        JSONArray application = (JSONArray)applications.get("application");//项目节点数组
-        for(int i = 0;i < application.size(); i++){
-            JSONObject  a1 = (JSONObject)application.get(i);
-            JSONArray instance = (JSONArray)a1.get("instance");
-            for(int k= 0; k< instance.size(); k++){
-                JSONObject k1 = (JSONObject)instance.get(k);
-                String projectName = (String)k1.get("app");
-                String ipAddr = (String)k1.get("ipAddr");
-                JSONObject k2 = (JSONObject)k1.get("port");
-                String projectPort = k2.get("$") + "";
-                StringBuffer sb = new StringBuffer();
-                String projectInfo = sb.append(projectName).append(":").append(ipAddr).append(":").append(projectPort).toString();
-                if(type == 0)
-                    SystemConf.eurekaList.add(projectInfo);
-                if(type == 1)
-                    cornEurekaList.add(projectInfo);
+            //解析获取服务的name/host/port信息
+            JSONObject jsonObject = JSONObject.fromObject(eurekaProjects);
+            log.debug("eureka接口响应信息：" + jsonObject.toString());
+            JSONObject applications = (JSONObject)jsonObject.get("applications");
+            JSONArray application = (JSONArray)applications.get("application");//项目节点数组
+            for(int i = 0;i < application.size(); i++){
+                JSONObject  a1 = (JSONObject)application.get(i);
+                JSONArray instance = (JSONArray)a1.get("instance");
+                for(int k= 0; k< instance.size(); k++){
+                    JSONObject k1 = (JSONObject)instance.get(k);
+                    String projectName = (String)k1.get("app");
+                    String ipAddr = (String)k1.get("ipAddr");
+                    JSONObject k2 = (JSONObject)k1.get("port");
+                    String projectPort = k2.get("$") + "";
+                    StringBuffer sb = new StringBuffer();
+                    String projectInfo = sb.append(projectName).append(":").append(ipAddr).append(":").append(projectPort).toString();
+                    if(type == 0)
+                        SystemConf.eurekaList.add(projectInfo);
+                    if(type == 1)
+                        cornEurekaList.add(projectInfo);
+                }
             }
         }
 

@@ -21,6 +21,7 @@ urls = ["http://IP_1:port_1/actuator/jolokia","http://IP_2:port_2/actuator/jolok
 ## 启动方法：
 
 把 application-{env}.properties 与 项目jar(telegrafsupport-0.0.1-SNAPSHOT.jar)包放在同一目录下，执行以下命令启动：  
-java -jar telegrafsupport-0.0.1-SNAPSHOT.jar --spring.profiles.active={环境test/prod}
+nohup java -jar telegrafsupport-0.0.1-SNAPSHOT.jar --spring.profiles.active=环境  >myserver.log 2>&1 &
+
 
 
