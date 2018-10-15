@@ -13,7 +13,7 @@ urls = ["http://IP_1:port_1/actuator/jolokia","http://IP_2:port_2/actuator/jolok
 /etc/telegraf/telegraf.conf里的jolokia配置，加上新增应用的ip/port。可以想象，如果应用数量一上来，对于维护人员来说就是一场灾难。  
 也发现有人和我遇到一样的问题：https://github.com/influxdata/telegraf/issues/3005
 
-本来，我是想着把go语言学好，然后打个分支，看能不能给telegraf贡献个支持eureka的插件。奈何时间上不现实，只好用java写个功能相仿的插件：
+本项目使用java开发了定时拉取eureka的服务列表，并实时更新到telegraf监控数据源的功能，可作为telegraf的eureka插件配套使用，以解决上述问题。
 >插件需指定eureka的访问地址，以便调用其api拉取注册中心的所有应用的ip/port  
 1. 插件启动时默认将eureka中所有已注册的服务同步到telegraf.conf的jolokia脚本上
 2. 每5分钟(可调整)监听eureka中注册列表的变化，如果有新增就同步到telegraf.conf脚本上
